@@ -107,6 +107,36 @@ class _EditProfileUIState extends State<EditProfileUI> {
               buildTextField("Full name", "Manuel Pineda"),
               buildTextField("Rol", "Developer"),
               buildTextField("Document", "Document ID"),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  OutlinedButton(
+                      onPressed: () {},
+                      style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal:  50),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+                      child: const Text("DELETE", style: TextStyle(
+                        fontSize: 17,
+                        letterSpacing: 2,
+                        color: Colors.black
+                      )),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
+                    ),
+                      child: const Text("SAVE", style: TextStyle(
+                        fontSize: 15,
+                        letterSpacing: 2,
+                        color: Colors.white
+                      )),
+                  )
+                ],
+              )
             ],
           ),
         ),
