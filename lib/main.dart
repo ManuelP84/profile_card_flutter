@@ -103,12 +103,38 @@ class _EditProfileUIState extends State<EditProfileUI> {
                   ],
                 ),
               ),
+              const SizedBox(),
+              buildTextField("Full name", "Manuel Pineda"),
+              buildTextField("Rol", "Developer"),
+              buildTextField("Document", "Document ID"),
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget buildTextField(String text, String placeHolder){
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 30),
+      child: TextField(
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(bottom: 5),
+          labelText: text,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          hintText: placeHolder,
+          hintStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey
+          )
+        ),
+
+      ),
+    );
+  }
+
+
 }
 
 
