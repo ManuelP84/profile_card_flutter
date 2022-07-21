@@ -17,13 +17,14 @@ class MyApp extends StatelessWidget {
 }
 
 class EditProfileUI extends StatefulWidget {
-  const EditProfileUI({Key? key}) : super(key: key);
-
-  @override
+  const EditProfileUI({Key? key}) : super(key: key);  @override
   State<EditProfileUI> createState() => _EditProfileUIState();
 }
 
 class _EditProfileUIState extends State<EditProfileUI> {
+  String? documentTypeOption;
+  final listTypeIdItems = ["CC", "CE"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +47,7 @@ class _EditProfileUIState extends State<EditProfileUI> {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 15, top: 20, right: 15),
+        padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
         child: GestureDetector(
           onTap: (){
             FocusScope.of(context).unfocus();
@@ -106,6 +107,7 @@ class _EditProfileUIState extends State<EditProfileUI> {
               const SizedBox(),
               buildTextField("Full name", "Manuel Pineda"),
               buildTextField("Rol", "Developer"),
+              buildSelectField(),
               buildTextField("Document", "Document ID"),
               const SizedBox(height: 30),
               Row(
@@ -144,6 +146,9 @@ class _EditProfileUIState extends State<EditProfileUI> {
     );
   }
 
+  /*
+  * Input text Widget
+  * */
   Widget buildTextField(String text, String placeHolder){
     return Padding(
       padding: const EdgeInsets.only(bottom: 30),
@@ -159,12 +164,40 @@ class _EditProfileUIState extends State<EditProfileUI> {
             color: Colors.grey
           )
         ),
-
       ),
     );
   }
 
-
+  /*
+  * Selectable Widget
+  * */
+  Widget buildSelectField(){
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 30),
+      child: DropdownButton<String>(
+        hint: const Text("ID type"),
+        value: documentTypeOption,
+        iconSize: 36,
+        isExpanded: true,
+        style: const TextStyle(
+            fontSize: 16,
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+        ),
+        onChanged: (newValue) {
+          setState(() {
+            documentTypeOption = newValue;
+          });
+        },
+        items: listTypeIdItems.map((valueItem) {
+          return DropdownMenuItem(
+            value: valueItem,
+            child: Text(valueItem),
+          );
+        }).toList(),
+      )
+    );
+  }
 }
 
 
