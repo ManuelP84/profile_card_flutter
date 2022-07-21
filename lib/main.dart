@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Welcome to Flutter',
+      title: 'Edit profile',
       home: EditProfileUI(),
     );
   }
@@ -29,7 +29,7 @@ class _EditProfileUIState extends State<EditProfileUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome to Flutter'),
+        title: const Text('Edit profile'),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
