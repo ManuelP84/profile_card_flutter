@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 void main() {
   runApp(const MyApp());
@@ -6,7 +9,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -17,13 +19,15 @@ class MyApp extends StatelessWidget {
 }
 
 class EditProfileUI extends StatefulWidget {
-  const EditProfileUI({Key? key}) : super(key: key);  @override
+  const EditProfileUI({Key? key}) : super(key: key);
+  @override
   State<EditProfileUI> createState() => _EditProfileUIState();
 }
 
 class _EditProfileUIState extends State<EditProfileUI> {
   String? documentTypeOption;
   final listTypeIdItems = ["CC", "CE"];
+  File? _imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -95,10 +99,18 @@ class _EditProfileUIState extends State<EditProfileUI> {
                           ),
                           color: Colors.blue
                         ),
-                        child: const Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                        ),
+                        child: InkWell(
+                          onTap: () => {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: ((builder) => bottomSheet(context))
+                            )
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                        )
                       ),
                     )
                   ],
@@ -198,7 +210,65 @@ class _EditProfileUIState extends State<EditProfileUI> {
       )
     );
   }
+
+  Widget bottomSheet(BuildContext context) {
+    return Container(
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        children: <Widget>[
+          const Text(
+            "Select a Profile Photo",
+            style: TextStyle(
+                fontSize: 20
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+            ElevatedButton.icon(
+              icon: const Icon(Icons.camera),
+              onPressed: () {
+                takePhoto(ImageSource.camera);
+              },
+              label: const Text("Camera"),
+            ),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.image),
+              onPressed: () {
+                takePhoto(ImageSource.gallery);
+              },
+              label: const Text("Gallery"),
+            ),
+          ])
+        ],
+      ),
+    );
+  }
+
+  Future takePhoto(ImageSource source) async {
+    try {
+      final pickedFile = await ImagePicker().pickImage(
+        source: source,
+      );
+      if (pickedFile == null) return;
+
+      final file = File(pickedFile.path);
+      setState(() {
+        _imageFile = File(file.path);
+      });
+    } on PlatformException catch (e) {
+      print("Failed to pick the picture! Sorry");
+    }
+  }
 }
+
+
 
 
 
